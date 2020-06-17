@@ -1,0 +1,98 @@
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+
+button:focus {outline:0;} /* fix border button */ 
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#E4E4E4;
+    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
+    font-size:12px;
+    height:100vh;
+    margin:0px;
+    padding:0px;
+    /* Padding to avoid the "unsafe" areas behind notches in the screen */
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-right, 0px);
+    text-transform:uppercase;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    .app {
+        background-position:left center;
+        padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
+        margin:-90px 0px 0px -198px;  /* offset vertical: half of image height */
+                                      /* offset horizontal: half of image width and text area width */
+    }
+}
+
+button:active{
+    background-color:rgb(33, 243, 138);
+  }
+
+  .grid-container {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: auto auto auto;
+
+    padding: 10;
+  }
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    border-color: rgb(33, 243, 138);
+    border-radius: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-family: Courier;
+    color: #999;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
+  .grid-item-telefone {
+    background-color: rgb(33, 243, 138);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    border-color: rgb(33, 243, 138);
+    border-radius: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-family: Courier;
+    color: #999;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    
+  }
+  .input {
+
+    width: 250px;
+    height: 80px;
+    align-self: center;
+    justify-self: center;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #FFF;
+    border: 2px solid rgb(33, 243, 138);
+    color: #666;
+  }
