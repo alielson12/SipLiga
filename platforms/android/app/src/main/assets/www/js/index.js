@@ -1,20 +1,19 @@
 var privateId;
 var password;
 var realm;
-
+var msg;
 
 var sipManager = {
 	register: function () {
-        alert(privateId)
-        alert(password)
 		cordova.plugins.sip.login(privateId, password, 'voip.vn3anjo.com.br', function (e) {
-			
 			if (e == 'RegistrationSuccess') {
-				alert("Connected")
+				alert("Registrado com Sucesso");
+				msg.innerHTML = "Conectado";
 				sipManager.listen();
 
 			} else {
 				alert("Registration Failed!");
+				msg.innerHTML = "Registration Failed!";
 			}
 
 		}, function (e) { console.log(e) })
@@ -26,15 +25,16 @@ var sipManager = {
 	},
 	listen: function () {
 		cordova.plugins.sip.listenCall(sipManager.events, sipManager.events);
+		msg.innerHTML = "Conectado e Pronto Para receber Ligações" ;
 		alert("pronto para receber ligacoes")
 	},
-	hangup: function () {
+	hangup: function () {	
 		cordova.plugins.sip.hangup(function (e) { console.log(e) }, function (e) { console.log(e) })
 	},
 	events: function (e) {
 		console.log(e);
 		if (e == 'Incoming') {
-			var r = confirm("Recebendo Chamada");
+			var r = true;
 			if (r == true) {
 				cordova.plugins.sip.accept(true, sipManager.events, sipManager.events);
 			} else {
@@ -50,12 +50,26 @@ var sipManager = {
 			sipManager.listen();
 		}
 		if (e == 'End') {
-			alert("Call End!");
+			// alert("Call End!");
+			msg.innerHTML = "Chamada Finalizada";
 			sipManager.listen();
 		}
 
 
 	}
+}
+const logar = () => {
+	login('203', '203', '192.168.1.111:5060', function (e) {
+
+		if (e == 'RegistrationSuccess') {
+			console.log(e);
+			listen();
+		} else {
+			alert("Registration Failed!");
+		}
+
+	}, function (e) { console.log(e) })
+
 }
 
 const successCallback = () => {
@@ -65,10 +79,10 @@ const errrooor = () => {
 	console.log("listen");
 }
 
+
 function onload() {
 	document.addEventListener("deviceready", onDeviceReady, false);
 }
-
 
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
@@ -88,8 +102,14 @@ const deleteDigit = () => {
 	document.querySelector('#inputnumbers').innerHTML = number;
 }
 
+const offButton = () => {
+	sipManager.hangup();
+	// msg.innerHTML = "Chamada Finalizada";
+}	
+
+
 const handleCallButton = () => {
-	
+	msg.innerHTML = "Conectando..";
 	const options = {
 		method: 'get',
 		data: {
@@ -104,7 +124,8 @@ const handleCallButton = () => {
 	realm = data.realm;
 	privateId = data.priviateid; 
 	
-    
+	alert(password)
+	alert(realm)
 
 	sipManager.register();
 	}, function(response) {
@@ -118,7 +139,7 @@ const handleCallButton = () => {
 
 
 }
-
+msg = document.querySelector("#spanid")
 document.querySelector("#button1").addEventListener("click", ()=>{click('1')})
 document.querySelector("#button2").addEventListener("click", ()=>{click('2')})
 document.querySelector("#button3").addEventListener("click", ()=>{click('3')})
@@ -129,8 +150,14 @@ document.querySelector("#button7").addEventListener("click", ()=>{click('7')})
 document.querySelector("#button8").addEventListener("click", ()=>{click('8')})
 document.querySelector("#button9").addEventListener("click", ()=>{click('9')})
 document.querySelector("#buttonHashtag").addEventListener("click", ()=>{click('#')})
+
+document.querySelector("#yuri").addEventListener("click", ()=>{offButton()})
+
 document.querySelector("#button0").addEventListener("click", ()=>{click('0')})
 document.querySelector("#buttonAsterisk").addEventListener("click", ()=>{click('*')})
 document.querySelector("#back").addEventListener("click", ()=>{deleteDigit()})
 document.querySelector("#callbutton").addEventListener("click", ()=>{handleCallButton()})
 document.querySelector("#backbutton").addEventListener("click", ()=>{testeButton()})
+
+
+

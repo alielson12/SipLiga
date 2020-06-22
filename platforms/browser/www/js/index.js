@@ -1,9 +1,20 @@
+var privateId;
+var password;
+var realm;
+var msg;
+
+
+
+
+msg = document.querySelector("#spanid")
+
 
 var sipManager = {
 	register: function () {
-		
-		cordova.plugins.sip.login('720302', '12345678', 'voip.vn3anjo.com.br', function (e) {
-			
+        
+        
+		cordova.plugins.sip.login(privateId, password, 'voip.vn3anjo.com.br', function (e) {
+             alert("chegou aqui")
 			if (e == 'RegistrationSuccess') {
 				alert("Connected")
 				sipManager.listen();
@@ -26,12 +37,13 @@ var sipManager = {
 	hangup: function () {
 		cordova.plugins.sip.hangup(function (e) { console.log(e) }, function (e) { console.log(e) })
 	},
-	events: function (e) {
+	events: function (e) {	
 		console.log(e);
 		if (e == 'Incoming') {
-			var r = confirm("Recebendo Chamada");
+			var r = true
 			if (r == true) {
 				cordova.plugins.sip.accept(true, sipManager.events, sipManager.events);
+				
 			} else {
 
 			}
@@ -65,19 +77,9 @@ function onload() {
 }
 
 
-document.getElementById("list").addEventListener("click",()=> {
-	alert('as');
-	sipManager.register()
-	console.log("logis")
-	}
-);
-
-
-
-
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
-    // sipManager.register();
+	//device is ready
 }
 
 var number = '';
@@ -94,23 +96,30 @@ const deleteDigit = () => {
 }
 
 const handleCallButton = () => {
-	alert('ligar para:' + number);
-	sipManager.register();
+	
 	const options = {
 		method: 'get',
-		data: { 
-			
+		data: {
 		 },
 	};
 
-	cordova.plugin.http.sendRequest('https://jsonplaceholder.typicode.com/todos/1', options, function(response) {
-  // prints 200
-  console.log(response);
+	cordova.plugin.http.sendRequest('https://teste.vn3anjo.com.br/vn3/api/faz_ligacao.php', options, function(response) {
+	
+	const data = JSON.parse(response.data);
+
+	password = data.password;
+	realm = data.realm;
+	privateId = data.priviateid; 
+
+
+
+	sipManager.register();
 	}, function(response) {
 		// prints 403
 		console.log(response);
 	
 		//prints Permission denied
+
 		console.log(response.error);
 	});
 
@@ -130,5 +139,7 @@ document.querySelector("#buttonHashtag").addEventListener("click", ()=>{click('#
 document.querySelector("#button0").addEventListener("click", ()=>{click('0')})
 document.querySelector("#buttonAsterisk").addEventListener("click", ()=>{click('*')})
 document.querySelector("#back").addEventListener("click", ()=>{deleteDigit()})
-
 document.querySelector("#callbutton").addEventListener("click", ()=>{handleCallButton()})
+document.querySelector("#backbutton").addEventListener("click", ()=>{testeButton()})
+
+

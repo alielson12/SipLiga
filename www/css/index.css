@@ -38,7 +38,7 @@ body {
 }
 
 button:active{
-    background-color:rgb(33, 243, 138);
+    background-color:blue;
   }
 
   .grid-container {
