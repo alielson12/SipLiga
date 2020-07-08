@@ -2,6 +2,7 @@ var privateId;
 var password;
 var realm;
 var msg;
+var aux = true;
 
 var sipManager = {
 	register: function () {
@@ -104,6 +105,22 @@ const offButton = () => {
 }	
 
 
+const vivaVoz = () =>{
+	 
+    if (aux ==true){
+		AudioToggle.setAudioMode(AudioToggle.SPEAKER);
+		aux = false;
+		
+	}
+     else{
+		AudioToggle.setAudioMode(AudioToggle.EARPIECE);
+		aux = true;
+		
+	 }
+	
+}
+
+
 const handleCallButton = () => {
 	msg.innerHTML = "Conectando..";
 	const options = {
@@ -143,7 +160,7 @@ document.querySelector("#button7").addEventListener("click", ()=>{click('7')})
 document.querySelector("#button8").addEventListener("click", ()=>{click('8')})
 document.querySelector("#button9").addEventListener("click", ()=>{click('9')})
 document.querySelector("#buttonHashtag").addEventListener("click", ()=>{click('#')})
-
+document.querySelector("#viva").addEventListener("click", ()=>{vivaVoz()})
 document.querySelector("#yuri").addEventListener("click", ()=>{offButton()})
 
 document.querySelector("#button0").addEventListener("click", ()=>{click('0')})

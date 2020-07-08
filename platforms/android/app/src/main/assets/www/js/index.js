@@ -2,31 +2,28 @@ var privateId;
 var password;
 var realm;
 var msg;
+var aux = true;
 
 var sipManager = {
 	register: function () {
 		cordova.plugins.sip.login(privateId, password, 'voip.vn3anjo.com.br', function (e) {
 			if (e == 'RegistrationSuccess') {
-				alert("Registrado com Sucesso");
 				msg.innerHTML = "Conectado";
 				sipManager.listen();
 
 			} else {
-				alert("Registration Failed!");
 				msg.innerHTML = "Registration Failed!";
 			}
 
 		}, function (e) { console.log(e) })
 	},
 	call: function () {
-		alert("ligando...")
 		cordova.plugins.sip.call('720301', '12345678','voip.vn3anjo.com.br', sipManager.events, sipManager.events)
 		
 	},
 	listen: function () {
 		cordova.plugins.sip.listenCall(sipManager.events, sipManager.events);
 		msg.innerHTML = "Conectado e Pronto Para receber Ligações" ;
-		alert("pronto para receber ligacoes")
 	},
 	hangup: function () {	
 		cordova.plugins.sip.hangup(function (e) { console.log(e) }, function (e) { console.log(e) })
@@ -108,6 +105,22 @@ const offButton = () => {
 }	
 
 
+const vivaVoz = () =>{
+	 
+    if (aux ==true){
+		AudioToggle.setAudioMode(AudioToggle.SPEAKER);
+		aux = false;
+		
+	}
+     else{
+		AudioToggle.setAudioMode(AudioToggle.EARPIECE);
+		aux = true;
+		
+	 }
+	
+}
+
+
 const handleCallButton = () => {
 	msg.innerHTML = "Conectando..";
 	const options = {
@@ -124,9 +137,6 @@ const handleCallButton = () => {
 	realm = data.realm;
 	privateId = data.priviateid; 
 	
-	alert(password)
-	alert(realm)
-
 	sipManager.register();
 	}, function(response) {
 		// prints 403
@@ -150,7 +160,7 @@ document.querySelector("#button7").addEventListener("click", ()=>{click('7')})
 document.querySelector("#button8").addEventListener("click", ()=>{click('8')})
 document.querySelector("#button9").addEventListener("click", ()=>{click('9')})
 document.querySelector("#buttonHashtag").addEventListener("click", ()=>{click('#')})
-
+document.querySelector("#viva").addEventListener("click", ()=>{vivaVoz()})
 document.querySelector("#yuri").addEventListener("click", ()=>{offButton()})
 
 document.querySelector("#button0").addEventListener("click", ()=>{click('0')})
